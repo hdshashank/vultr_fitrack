@@ -16,13 +16,17 @@ function Header() {
     }
   };
   window.addEventListener("scroll", changeNavbarColor);
-  if (location.pathname === '/signup' || location.pathname === '/login') {
-    return null; // Do not render the navbar on the signup page
+  if (location.pathname === "/signup" || location.pathname === "/login") {
+    return (
+      <div className="left-[50%] top-12 -translate-x-2/4 -translate-y-2/4 absolute">
+        <a href="/"><img src={logo} alt="logo" style={{ height: 35 }} /></a>
+      </div>
+    ); 
   }
   return (
     <div
       className={`sticky top-0 z-50 h-[65px]  flex justify-between items-center ${
-        colorChange ? "  bg-white  shadow-[black_0px_1px_10px] " : "text-black"
+        colorChange ? "  bg-white  shadow-3xl " : "text-black"
       }transition duration-500 `}
     >
       <img

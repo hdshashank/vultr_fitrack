@@ -15,7 +15,7 @@ function SignUp() {
         <mui.FormControl sx={{ width: "50ch" }}>
           <mui.TextField label="Name" variant="outlined" type="text" sx={{ margin: 1 }}/>
           <mui.TextField label="Email" variant="outlined" type="email" sx={{ margin: 1 }}/>
-          <mui.TextField label="Password" variant="outlined" type="password " sx={{ margin: 1 }}/>
+          <mui.TextField label="Password" variant="outlined" type="password" sx={{ margin: 1 }}/>
           <mui.Button variant="contained" sx={{margin: 2.5, height: 42, fontSize: "18px" }}>Signup</mui.Button>
         </mui.FormControl>
       </div>

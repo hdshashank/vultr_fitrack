@@ -39,7 +39,9 @@ function Login() {
             </mui.Button>
             <div className="flex gap-2 relative left-[20%] ">
               <h4>Don&apos;t have an account?</h4>
-              <a href="/signup" className="text-frenchBlue font-semibold">SignUp</a>
+              <a href="/signup" className="text-frenchBlue font-semibold">
+                SignUp
+              </a>
             </div>
           </mui.FormControl>
         </div>

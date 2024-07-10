@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import LandingPage from "./pages/LandingPage";
-import Progress from "./pages/Progress";
+import Calculators from "./pages/Calculators";
 import Nutrition from "./pages/Nutrition";
 import Workouts from "./pages/Workouts";
 import Achievements from "./pages/Achievements";
@@ -20,7 +20,7 @@ export default function App() {
         <Routes>
           <Route index element={<LandingPage />} />
           <Route path="/" element={<LandingPage />} />
-          <Route path="/progress" element={<Progress />} />
+          <Route path="/calculators" element={<Calculators />} />
           <Route path="/nutrition" element={<Nutrition />} />
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/achievements" element={<Achievements />} />

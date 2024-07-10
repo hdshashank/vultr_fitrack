@@ -1,9 +1,10 @@
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
-import login1 from "../assets/hero/hero2.jpg";
-import login2 from "../assets/login/login2.avif";
-import login3 from "../assets/login/login3.jpg";
+import hero1 from "../assets/hero/hero1.webp";
+import hero2 from "../assets/hero/hero2.jpg";
+import hero3 from "../assets/hero/hero3.jpg";
+import hero4 from "../assets/hero/hero4.jpg";
 
 function HeroSlider() {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
@@ -16,9 +17,10 @@ function HeroSlider() {
         bullets={false}
         buttons={false}
       >
-        <div data-src={login1} />
-        <div data-src={login2} />
-        <div data-src={login3} />
+        <div data-src={hero1} />
+        <div data-src={hero2} />
+        <div data-src={hero3} />
+        <div data-src={hero4} />
       </AutoplaySlider>
     </div>
   );
