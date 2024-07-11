@@ -1,8 +1,11 @@
+import WorkoutForm from "../components/WorkoutForm"
+import WorkoutDetails from "../components/WorkoutDetails"
 
 function Workouts() {
   return (
     <div>
-      hello
+      <WorkoutDetails />
+      <WorkoutForm />
     </div>
   )
 }
