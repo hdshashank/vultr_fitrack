@@ -29,11 +29,13 @@ function Header() {
         colorChange ? "  bg-white  shadow-3xl " : "text-black"
       }transition duration-500 `}
     >
+      <a href="/">
       <img
         src={logo}
         alt="logo"
         style={{ height: 29, position: "relative", left: 100 }}
       />
+      </a>
       <Navbar />
       <ul className="right-[120px] relative">
         <mui.Button

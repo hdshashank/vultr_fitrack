@@ -2,8 +2,7 @@
 function Workouts() {
   return (
     <div>
-      Workouts
-      Workouts
+      hello
     </div>
   )
 }
