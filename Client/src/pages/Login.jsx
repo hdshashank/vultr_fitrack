@@ -1,8 +1,19 @@
+import { useState } from "react";
 import * as mui from "@mui/material";
 import logo from "../assets/logo.png";
 import Slider from "../components/Slider";
 
 function Login() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(email, password);
+  }
+
   return (
     <>
       <Slider />
@@ -19,23 +30,28 @@ function Login() {
         </div>
         <div className="h-[450px] w-[400px] flex items-center justify-center">
           <mui.FormControl sx={{ width: "55ch" }}>
-            <mui.TextField
+          <mui.TextField
               label="Email"
               variant="outlined"
               type="email"
               sx={{ margin: 1 }}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
             <mui.TextField
               label="Password"
               variant="outlined"
               type="password"
               sx={{ margin: 1 }}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
             <mui.Button
               variant="contained"
               sx={{ margin: 2.5, height: 42, fontSize: "18px" }}
+              onClick={handleSubmit}
             >
-              login
+              Login
             </mui.Button>
             <div className="flex gap-2 relative left-[20%] ">
               <h4>Don&apos;t have an account?</h4>

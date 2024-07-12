@@ -10,31 +10,32 @@ import Community from "./pages/Community";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import { WorkoutsContextProvider } from './context/WorkoutsContext';
-
+import { WorkoutsContextProvider } from "./context/WorkoutsContext";
+import { AuthContextProvider } from "./context/authContext";
 
 export default function App() {
   return (
-    <WorkoutsContextProvider>
-    <div>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route index element={<LandingPage />} />
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/calculators" element={<Calculators />} />
-          <Route path="/nutrition" element={<Nutrition />} />
-          <Route path="/workouts" element={<Workouts />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="*" element={<h1>Not Found</h1>} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </div>
-    </WorkoutsContextProvider>
-
+    <AuthContextProvider>
+      <WorkoutsContextProvider>
+        <div>
+          <BrowserRouter>
+            <Header />
+            <Routes>
+              <Route index element={<LandingPage />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/calculators" element={<Calculators />} />
+              <Route path="/nutrition" element={<Nutrition />} />
+              <Route path="/workouts" element={<Workouts />} />
+              <Route path="/achievements" element={<Achievements />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="*" element={<h1>Not Found</h1>} />
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </div>
+      </WorkoutsContextProvider>
+    </AuthContextProvider>
   );
 }
