@@ -1,12 +1,18 @@
 import { useState } from "react";
 import * as mui from "@mui/material";
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+
 
 function WorkoutForm() {
+  const { dispatch } = useWorkoutsContext()
+
   const [title, setTitle] = useState("");
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState("");
   const [weight, setWeight] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([])
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,14 +28,18 @@ function WorkoutForm() {
 
     if (!response.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields)
     }
     if (response.ok) {
+      setEmptyFields([])
       setTitle("");
       setReps("");
       setSets("");
       setWeight("");
       setError(null);
-      console.log("Workout Added Successfully"), json;
+      dispatch({type: 'CREATE_WORKOUT', payload: json})
+      window.location.reload()
+
     }
   };
 
@@ -44,6 +54,8 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setTitle(e.target.value)}
             value={title}
+            className={emptyFields.includes('title') ? 'error' : ''}
+
           />
           <mui.TextField
             label="Reps"
@@ -52,6 +64,8 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setReps(e.target.value)}
             value={reps}
+            className={emptyFields.includes('reps') ? 'error' : ''}
+
           />
           <mui.TextField
             label="Sets"
@@ -60,6 +74,8 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setSets(e.target.value)}
             value={sets}
+            className={emptyFields.includes('sets') ? 'error' : ''}
+
           />
           <mui.TextField
             label="Weight"
@@ -68,6 +84,8 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setWeight(e.target.value)}
             value={weight}
+            className={emptyFields.includes('weight') ? 'error' : ''}
+
           />
           <mui.Button
             variant="contained"

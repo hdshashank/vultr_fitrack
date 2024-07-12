@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 import * as mui from "@mui/material";
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+
 
 function WorkoutTemp({ workout }) {
+  const { dispatch } = useWorkoutsContext()
 
   const handleClick = async () => {
     const response = await fetch(`http://localhost:4000/workouts/${workout._id}`,{
@@ -9,8 +13,9 @@ function WorkoutTemp({ workout }) {
     }) 
     const json = await response.json();
 
-    if (!response.ok) {
-      console.log(json.error);
+    if (response.ok) {
+      dispatch({type: 'DELETE_WORKOUT', payload: json})
+      window.location.reload()
     }
   }
 
@@ -21,7 +26,7 @@ function WorkoutTemp({ workout }) {
       <p>Load:{workout.weight}</p>
       <p>Sets:{workout.sets}</p>
       <p>Reps:{workout.reps}</p>
-      <p>{workout.createdAt}</p>
+      <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p>
       <mui.Button
             variant="contained"
             sx={{ margin: 1.5, height: 22, fontSize: "18px" }}
