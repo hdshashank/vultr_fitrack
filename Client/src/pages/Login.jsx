@@ -2,16 +2,20 @@ import { useState } from "react";
 import * as mui from "@mui/material";
 import logo from "../assets/logo.png";
 import Slider from "../components/Slider";
+import { useLogin } from "../hooks/useLogin"
+
 
 function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {login, error, isLoading} = useLogin()
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    await login(email, password)
   }
 
   return (
@@ -50,9 +54,11 @@ function Login() {
               variant="contained"
               sx={{ margin: 2.5, height: 42, fontSize: "18px" }}
               onClick={handleSubmit}
+              disabled={isLoading}
             >
               Login
             </mui.Button>
+            {error && <div className="error">{error}</div>}
             <div className="flex gap-2 relative left-[20%] ">
               <h4>Don&apos;t have an account?</h4>
               <a href="/signup" className="text-frenchBlue font-semibold">

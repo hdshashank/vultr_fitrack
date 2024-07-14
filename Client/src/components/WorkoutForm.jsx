@@ -1,10 +1,14 @@
 import { useState } from "react";
 import * as mui from "@mui/material";
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
+
 
 
 function WorkoutForm() {
   const { dispatch } = useWorkoutsContext()
+  const { user } = useAuthContext()
+
 
   const [title, setTitle] = useState("");
   const [reps, setReps] = useState("");
@@ -12,15 +16,28 @@ function WorkoutForm() {
   const [weight, setWeight] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([])
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
+
+    if (!title || !reps || !sets || !weight) {
+      setError('Please fill in all fields');
+      return;
+    }
+
     const workout = { title, reps, sets, weight };
     const response = await fetch("http://localhost:4000/workouts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`
       },
       body: JSON.stringify(workout),
     });
@@ -38,8 +55,7 @@ function WorkoutForm() {
       setWeight("");
       setError(null);
       dispatch({type: 'CREATE_WORKOUT', payload: json})
-      window.location.reload()
-
+      setSnackbarOpen(true)
     }
   };
 
@@ -100,6 +116,12 @@ function WorkoutForm() {
             </p>
           )}
         </mui.FormControl>
+        <mui.Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message="Workout added successfully"
+      />
       </div>
     </div>
   );

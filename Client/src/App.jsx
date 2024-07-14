@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import LandingPage from "./pages/LandingPage";
 import Calculators from "./pages/Calculators";
@@ -11,11 +11,13 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { WorkoutsContextProvider } from "./context/WorkoutsContext";
-import { AuthContextProvider } from "./context/authContext";
+import { useAuthContext } from './hooks/useAuthContext'
+
 
 export default function App() {
+  const { user } = useAuthContext()
+
   return (
-    <AuthContextProvider>
       <WorkoutsContextProvider>
         <div>
           <BrowserRouter>
@@ -28,14 +30,13 @@ export default function App() {
               <Route path="/workouts" element={<Workouts />} />
               <Route path="/achievements" element={<Achievements />} />
               <Route path="/community" element={<Community />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+              <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" />} />
               <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
             <Footer />
           </BrowserRouter>
         </div>
       </WorkoutsContextProvider>
-    </AuthContextProvider>
   );
 }

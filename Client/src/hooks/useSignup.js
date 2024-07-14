@@ -11,7 +11,7 @@ const {dispatch} = useAuthContext();
     setLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:4000/use/signup", {
+    const response = await fetch("http://localhost:4000/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -2,10 +2,18 @@ import Navbar from "./Navbar";
 import * as mui from "@mui/material";
 import logo from "../assets/logo.png";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function Header() {
+  const { logout } = useLogout();
+  const { user } = useAuthContext();
+
+  const handleClick = () => {
+    logout();
+  };
+
   const location = useLocation();
   const [colorChange, setColorchange] = useState(false);
   const changeNavbarColor = () => {
@@ -19,9 +27,11 @@ function Header() {
   if (location.pathname === "/signup" || location.pathname === "/login") {
     return (
       <div className="left-[50%] top-12 -translate-x-2/4 -translate-y-2/4 absolute">
-        <a href="/"><img src={logo} alt="logo" style={{ height: 35 }} /></a>
+        <a href="/">
+          <img src={logo} alt="logo" style={{ height: 35 }} />
+        </a>
       </div>
-    ); 
+    );
   }
   return (
     <div
@@ -30,35 +40,56 @@ function Header() {
       }transition duration-500 `}
     >
       <a href="/">
-      <img
-        src={logo}
-        alt="logo"
-        style={{ height: 29, position: "relative", left: 100 }}
-      />
+        <img
+          src={logo}
+          alt="logo"
+          style={{ height: 29, position: "relative", left: 100 }}
+        />
       </a>
       <Navbar />
       <ul className="right-[120px] relative">
-        <mui.Button
-          variant="outlined"
-          sx={{
-            margin: 0.75,
-            height: 40,
-            fontSize: "20px",
-            border: 2,
-            ":hover": { color: "#1d60ae", border: 2 },
-          }}
-          href="/login"
-        >
-          Login
-        </mui.Button>
-        <Link to="/signup" style={{ textDecoration: "none" }}>
-          <mui.Button
-            variant="contained"
-            sx={{ margin: 0.75, height: 40, fontSize: "20px" }}
-          >
-            SignUp
-          </mui.Button>
-        </Link>
+        {user && (
+          <>
+            <span>{user.email}</span>
+            <mui.Button
+              variant="outlined"
+              sx={{
+                margin: 0.75,
+                height: 40,
+                fontSize: "20px",
+                border: 2,
+                ":hover": { color: "#1d60ae", border: 2 },
+              }}
+              onClick={handleClick}
+            >
+              Logout
+            </mui.Button>
+          </>
+        )}
+        {!user && (
+          <>
+            <mui.Button
+              variant="outlined"
+              sx={{
+                margin: 0.75,
+                height: 40,
+                fontSize: "20px",
+                border: 2,
+                ":hover": { color: "#1d60ae", border: 2 },
+              }}
+              href="/login"
+            >
+              Login
+            </mui.Button>
+            <mui.Button
+              variant="contained"
+              sx={{ margin: 0.75, height: 40, fontSize: "20px" }}
+              href="/signup"
+            >
+              SignUp
+            </mui.Button>
+          </>
+        )}
       </ul>
     </div>
   );

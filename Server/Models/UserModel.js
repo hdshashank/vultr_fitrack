@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
-const schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+
+const schema = mongoose.Schema;
 
 const userSchema = new schema(
   {
@@ -44,23 +45,23 @@ userSchema.statics.signup = async function (email, password) {
 };
 
 userSchema.statics.login = async function (email, password) {
-    //validation
-    if (!email || !password) {
-      throw new Error("Email and Password are required");
-    }
+  //validation
+  if (!email || !password) {
+    throw new Error("Email and Password are required");
+  }
 
-    const user = await this.findOne({ email });
-    if (!user) {
-      throw new Error("Email does not exist");
-    }
+  const user = await this.findOne({ email });
+  if (!user) {
+    throw new Error("Email does not exist");
+  }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) {
-      throw new Error("Password is incorrect");
-    }
+  if (!isMatch) {
+    throw new Error("Password is incorrect");
+  }
 
-    return user;
-}
+  return user;
+};
 
 module.exports = mongoose.model("UserCollection", userSchema);
