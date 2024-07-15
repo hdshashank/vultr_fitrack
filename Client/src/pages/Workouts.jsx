@@ -1,40 +1,88 @@
-import WorkoutForm from "../components/WorkoutForm"
-import WorkoutDetails from "../components/WorkoutDetails"
-
-import { useEffect }from 'react'
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
-import { useAuthContext } from "../hooks/useAuthContext"
-
+import WorkoutForm from "../components/WorkoutForm";
+import WorkoutDetails from "../components/WorkoutDetails";
+import { useEffect, useState } from "react";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import TextField from "@mui/material/TextField";
+import dayjs from "dayjs";
+import error from "../assets/pictures/error.svg";
+import ExerciseForm from './ExerciseForm';
+import ExercisesPage from "./ExercisesPage";
 
 function Workouts() {
-  const {workouts, dispatch} = useWorkoutsContext()
-  const {user} = useAuthContext()
+  const { workouts, dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
+  const [selectedDate, setSelectedDate] = useState(dayjs());
 
+  const handleDateChange = (newValue) => {
+    setSelectedDate(newValue);
+  };
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('http://localhost:4000/workouts', {
-        headers: {'Authorization': `Bearer ${user.token}`},
-      })
-      const json = await response.json()
+      const response = await fetch("http://localhost:4000/workouts", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      const json = await response.json();
 
       if (response.ok) {
-        dispatch({type: 'SET_WORKOUTS', payload: json})
+        dispatch({ type: "SET_WORKOUTS", payload: json });
       }
-    }
+    };
 
     if (user) {
-      fetchWorkouts()
+      fetchWorkouts();
     }
-  }, [dispatch, user])
+  }, [dispatch, user]);
 
-  return (
-    <div>
-      {workouts && workouts.map((workout) => (
-          <WorkoutDetails key={workout._id} workout={workout} />
-        ))}
+  const filteredWorkouts = workouts
+    ? workouts.filter((workout) => {
+        const workoutDate = dayjs(workout.date).format("YYYY-MM-DD");
+        return workoutDate === selectedDate.format("YYYY-MM-DD");
+      })
+    : [];
+  return ( 
+    <>
+    <div className="flex items-center justify-center h-[93vh] bg-transparent gap-8">
+      <div className="bg-snowWhite h-[825px] w-[1400px] rounded-xl flex flex-col items-center ">
+        <div className="flex flex-col items-center bg-transparent w-[400px] h-[150px] justify-evenly relative top-6">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DesktopDatePicker
+            label="Date picker"
+            inputFormat="MM/DD/YYYY"
+            value={selectedDate}
+            onChange={handleDateChange}
+            renderInput={(params) => <TextField {...params} />}
+            sx={{ width: "40ch" }}
+          />
+        </LocalizationProvider>
+        <p className="text-frenchBlue font-black tracking-wide text-xl">Workouts logged on {selectedDate.format("MM/DD/YYYY")}</p>
+        </div>
+        <div className="flex gap-6 flex-wrap ml-7 mt-10">
+        {filteredWorkouts.length > 0 ? (
+          filteredWorkouts.map((workout) => (
+            <WorkoutDetails key={workout._id} workout={workout} />
+          ))
+        ) : (
+          <div className="flex flex-col gap-16 top-16 relative">
+          <p className="text-3xl font-black tracking-wider">No workouts found for the selected date.</p>
+          <img src={error} alt="" style={{height:"200px"}}/>
+          </div>
+        )}
+        </div>
+      </div>
       <WorkoutForm />
     </div>
-  )
+    <div className="h-[93vh]">
+    <ExerciseForm />
+
+    </div>
+
+    <ExercisesPage />
+    </>
+  );
 }
 
-export default Workouts
+export default Workouts;

@@ -10,7 +10,6 @@ export default function Navbar() {
     { label: "Nutrition", path: "/nutrition", value: 2 },
     { label: "Workouts", path: "/workouts", value: 3 },
     { label: "Achievements", path: "/achievements", value: 4 },
-    { label: "Community", path: "/community", value: 5 },
   ];
 
   const activeStyle = {

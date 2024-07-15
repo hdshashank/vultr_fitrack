@@ -9,7 +9,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 function Header() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-
   const handleClick = () => {
     logout();
   };
@@ -17,7 +16,7 @@ function Header() {
   const location = useLocation();
   const [colorChange, setColorchange] = useState(false);
   const changeNavbarColor = () => {
-    if (window.scrollY >= 80) {
+    if (window.scrollY >= 50) {
       setColorchange(true);
     } else {
       setColorchange(false);
@@ -50,7 +49,7 @@ function Header() {
       <ul className="right-[120px] relative">
         {user && (
           <>
-            <span>{user.email}</span>
+            <span className="uppercase right-2 relative text-xl font-semibold text-frenchBlue">{user?.name} </span>
             <mui.Button
               variant="outlined"
               sx={{

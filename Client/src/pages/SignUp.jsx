@@ -64,6 +64,12 @@ function SignUp() {
               Signup
             </mui.Button> 
             {error && <p style={{ color: "red" }}>{error}</p>}
+            <div className="flex gap-2 relative left-[20%] ">
+              <h4>Already have an account?</h4>
+              <a href="/login" className="text-frenchBlue font-semibold">
+                Login
+              </a>
+            </div>
           </mui.FormControl>
         </div>
       </div>

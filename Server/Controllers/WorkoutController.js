@@ -1,11 +1,24 @@
 const WorkoutCollection = require("../Models/WorkoutModel");
 const mongoose = require("mongoose");
 
+
+
 //get all workouts
 const getAllWorkouts = async (req, res) => {
   const user_id = req.user._id
+  const { startDate, endDate } = req.query; // Accept startDate and endDate from query
 
-  const workouts = await WorkoutCollection.find({user_id}).sort({ createdAt: -1 });
+  let query = { user_id };
+
+  if (startDate) {
+    query.date = { ...query.date, $gte: new Date(startDate) };
+  }
+
+  if (endDate) {
+    query.date = { ...query.date, $lte: new Date(endDate) };
+  }
+
+  const workouts = await WorkoutCollection.find(query).sort({ date: 1 });
 
   res.status(200).json(workouts);
 };

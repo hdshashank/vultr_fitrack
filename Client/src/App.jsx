@@ -7,11 +7,12 @@ import Nutrition from "./pages/Nutrition";
 import Workouts from "./pages/Workouts";
 import Achievements from "./pages/Achievements";
 import Community from "./pages/Community";
-import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { WorkoutsContextProvider } from "./context/WorkoutsContext";
 import { useAuthContext } from './hooks/useAuthContext'
+import ExercisesPage from "./pages/ExercisesPage";
+import ExerciseDetail from "./pages/ExerciseDetail";
 
 
 export default function App() {
@@ -27,14 +28,15 @@ export default function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/calculators" element={<Calculators />} />
               <Route path="/nutrition" element={<Nutrition />} />
-              <Route path="/workouts" element={<Workouts />} />
+              <Route path="/workouts" element={!user ? <SignUp /> : <Workouts />} />
               <Route path="/achievements" element={<Achievements />} />
               <Route path="/community" element={<Community />} />
               <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
               <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" />} />
+              <Route path="/exercises" element={<ExercisesPage />} />
+              <Route path="/exercises/:id" element={<ExerciseDetail />} />
               <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
-            <Footer />
           </BrowserRouter>
         </div>
       </WorkoutsContextProvider>

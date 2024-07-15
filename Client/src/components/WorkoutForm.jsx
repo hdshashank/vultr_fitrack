@@ -1,34 +1,30 @@
 import { useState } from "react";
 import * as mui from "@mui/material";
-import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
-
-
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function WorkoutForm() {
-  const { dispatch } = useWorkoutsContext()
-  const { user } = useAuthContext()
-
+  const { dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState("");
   const [weight, setWeight] = useState("");
   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([])
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
-
+  const [emptyFields, setEmptyFields] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!user) {
-      setError('You must be logged in')
-      return
+      setError("You must be logged in");
+      return;
     }
 
     if (!title || !reps || !sets || !weight) {
-      setError('Please fill in all fields');
+      setError("Please fill in all fields");
       return;
     }
 
@@ -37,7 +33,7 @@ function WorkoutForm() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${user.token}`
+        Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify(workout),
     });
@@ -45,24 +41,24 @@ function WorkoutForm() {
 
     if (!response.ok) {
       setError(json.error);
-      setEmptyFields(json.emptyFields)
+      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
-      setEmptyFields([])
+      setEmptyFields([]);
       setTitle("");
       setReps("");
       setSets("");
       setWeight("");
       setError(null);
-      dispatch({type: 'CREATE_WORKOUT', payload: json})
-      setSnackbarOpen(true)
+      dispatch({ type: "CREATE_WORKOUT", payload: json });
+      setSnackbarOpen(true);
     }
   };
 
   return (
-    <div>
-      <div className="h-[450px] w-[400px] bg-snowWhite flex items-center justify-center">
-        <mui.FormControl sx={{ width: "55ch" }}>
+    <div className="h-[425px] w-[400px] bg-snowWhite rounded-2xl">
+      <div className="h-[425px] flex items-center justify-center">
+        <mui.FormControl sx={{ width: "40ch" }}>
           <mui.TextField
             label="Exercise Title"
             variant="outlined"
@@ -70,8 +66,7 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setTitle(e.target.value)}
             value={title}
-            className={emptyFields.includes('title') ? 'error' : ''}
-
+            className={emptyFields.includes("title") ? "error" : ""}
           />
           <mui.TextField
             label="Reps"
@@ -80,8 +75,7 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setReps(e.target.value)}
             value={reps}
-            className={emptyFields.includes('reps') ? 'error' : ''}
-
+            className={emptyFields.includes("reps") ? "error" : ""}
           />
           <mui.TextField
             label="Sets"
@@ -90,8 +84,7 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setSets(e.target.value)}
             value={sets}
-            className={emptyFields.includes('sets') ? 'error' : ''}
-
+            className={emptyFields.includes("sets") ? "error" : ""}
           />
           <mui.TextField
             label="Weight"
@@ -100,9 +93,9 @@ function WorkoutForm() {
             sx={{ margin: 1 }}
             onChange={(e) => setWeight(e.target.value)}
             value={weight}
-            className={emptyFields.includes('weight') ? 'error' : ''}
-
+            className={emptyFields.includes("weight") ? "error" : ""}
           />
+
           <mui.Button
             variant="contained"
             sx={{ margin: 2.5, height: 42, fontSize: "18px" }}
@@ -111,17 +104,17 @@ function WorkoutForm() {
             Add Workout
           </mui.Button>
           {error && (
-            <p className="bg-red-200 rounded-md border-2 relative  border-red-700 w-[350px] p-2">
+            <p className="bg-red-200 rounded-md border-2 relative left-20 bottom-2 flex items-center justify-center border-red-700 w-[200px] h-[40px] p-2 tracking-wider">
               {error}
             </p>
           )}
         </mui.FormControl>
         <mui.Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-        message="Workout added successfully"
-      />
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={() => setSnackbarOpen(false)}
+          message="Workout added successfully"
+        />
       </div>
     </div>
   );
