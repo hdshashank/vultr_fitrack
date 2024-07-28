@@ -291,7 +291,7 @@ function NutritionForm() {
                 onClick={handleSubmit}
                 sx={{ height: 42, fontSize: "18px", fontWeight: "bold" }}
               >
-                Add Workout
+                Generate Plan
               </mui.Button>
             </mui.FormControl>
           </div>

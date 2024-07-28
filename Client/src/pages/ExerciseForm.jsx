@@ -127,7 +127,7 @@ function ExerciseForm() {
           }`}
         >
           <h1 className="text-3xl font-bold text-frenchBlue pt-8">
-            Generate Nutrition Plan
+            Generate Workout Plan
           </h1>
           <div className=" h-full w-full  flex flex-col items-center justify-center ">
             <mui.FormControl className="flex h-[700px] w-[375px] justify-evenly ">
@@ -221,7 +221,7 @@ function ExerciseForm() {
                 onClick={handleSubmit}
                 sx={{ height: 42, fontSize: "18px", fontWeight: "bold" }}
               >
-                Add Workout
+                Generate Plan
               </mui.Button>
             </mui.FormControl>
           </div>
