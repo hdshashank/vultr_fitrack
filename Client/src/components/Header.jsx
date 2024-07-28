@@ -49,20 +49,24 @@ function Header() {
       <ul className="right-[120px] relative">
         {user && (
           <>
-            <span className="uppercase right-2 relative text-xl font-semibold text-frenchBlue">{user?.name} </span>
-            <mui.Button
-              variant="outlined"
-              sx={{
-                margin: 0.75,
-                height: 40,
-                fontSize: "20px",
-                border: 2,
-                ":hover": { color: "#1d60ae", border: 2 },
-              }}
-              onClick={handleClick}
-            >
-              Logout
-            </mui.Button>
+            <ul className="flex justify-center items-center">
+              <span className="uppercase right-2 relative text-[24px] font-semibold text-frenchBlue">
+                {user?.name}{" "}
+              </span>
+              <mui.Button
+                variant="outlined"
+                sx={{
+                  margin: 0.75,
+                  height: 40,
+                  fontSize: "20px",
+                  border: 2,
+                  ":hover": { color: "#1d60ae", border: 2 },
+                }}
+                onClick={handleClick}
+              >
+                Logout
+              </mui.Button>
+            </ul>
           </>
         )}
         {!user && (

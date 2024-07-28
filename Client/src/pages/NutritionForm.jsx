@@ -1,240 +1,310 @@
-import dietPlan from "../components/Nutrition/dietPlan.json";
-import NutritionPlan from "./NutritionPlan";
+/* eslint-disable no-unused-vars */
 
-import React, { useState } from "react";
+import NutritionPlan from "./NutritionPlan";
+import { useState } from "react";
+import * as mui from "@mui/material";
 
 function NutritionForm() {
-  const [userInput, setUserInput] = useState({
-    height: "",
-    weight: "",
-    age: "",
-    gender: "",
-    activityLevel: "",
-    fitnessGoal: "",
-  });
   const [nutritionPlan, setNutritionPlan] = useState(null);
+  const [showResult, setShowResult] = useState("hidden");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [dietaryPreferences, setDietaryPreferences] = useState("");
+  const [foodtype, setFoodtype] = useState("");
+  const [activityLevel, setActivityLevel] = useState("");
+  const [fitnessGoal, setFitnessGoal] = useState("");
+  const [allergies, setAllergies] = useState("");
+  const [region, setRegion] = useState("");
+  const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserInput({
-      ...userInput,
-      [name]: value,
-    });
-  };
+  const gen = [
+    {
+      value: "male",
+      label: "MALE",
+    },
+    {
+      value: "female",
+      label: "FEMALE",
+    },
+  ];
 
-  const generateNutritionPlan = () => {
-    const { height, weight, age, gender, activityLevel, fitnessGoal } =
-      userInput;
-    let bmr;
+  const dietPref = [
+    {
+      value: "high-protien",
+      label: "High-Protien",
+    },
+    {
+      value: "keto",
+      label: "Keto",
+    },
+    {
+      value: "high-carb",
+      label: "High-Carb",
+    },
+    {
+      value: "balanced",
+      label: "Balanced",
+    },
+  ];
 
-    if (gender === "male") {
-      bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-    } else {
-      bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  const foodTyp = [
+    {
+      value: "vegetarian",
+      label: "Vegetarian",
+    },
+    {
+      value: "vegan",
+      label: "Vegan",
+    },
+    {
+      value: "non-vegetarian",
+      label: "Non-Vegetarian",
+    },
+  ];
+
+  const actLvl = [
+    {
+      value: "sedentary",
+      label: "Sedentary",
+    },
+    {
+      value: "light",
+      label: "Light",
+    },
+    {
+      value: "moderate",
+      label: "Moderate",
+    },
+    {
+      value: "active",
+      label: "Active",
+    },
+    {
+      value: "very-active",
+      label: "Very Active",
+    },
+  ];
+
+  const fitGoal = [
+    {
+      value: "muscle-gain",
+      label: "Muscle Gain",
+    },
+    {
+      value: "weight-loss",
+      label: "Weight Loss",
+    },
+    {
+      value: "maintain",
+      label: "Maintain",
+    },
+  ];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (
+      !height ||
+      !weight ||
+      !age ||
+      !gender ||
+      !dietaryPreferences ||
+      !foodtype ||
+      !activityLevel ||
+      !fitnessGoal ||
+      !allergies ||
+      !region
+    ) {
+      setError("Please fill in all fields");
+      return;
     }
 
-    let activityFactor;
-    switch (activityLevel) {
-      case "sedentary":
-        activityFactor = 1.2;
-        break;
-      case "light":
-        activityFactor = 1.375;
-        break;
-      case "moderate":
-        activityFactor = 1.55;
-        break;
-      case "active":
-        activityFactor = 1.725;
-        break;
-      case "very active":
-        activityFactor = 1.9;
-        break;
-      default:
-        activityFactor = 1;
-    }
-
-    const maintenanceCalories = bmr * activityFactor;
-    let caloricIntake;
-    if (fitnessGoal === "lose weight") {
-      caloricIntake = maintenanceCalories - 500;
-    } else if (fitnessGoal === "gain muscle") {
-      caloricIntake = maintenanceCalories + 500;
-    } else {
-      caloricIntake = maintenanceCalories;
-    }
-
-    const totalCalories = Math.round(caloricIntake);
-
-    const plan = {
-      totalDailyCalories: totalCalories,
-      meals: {
-        breakfast: {
-          totalCalories: Math.round(totalCalories * 0.25),
-          items: calculateMealItems(totalCalories * 0.25, [
-            { item: "Oatmeal", calories: 150, grams: 150 },
-            { item: "Greek Yogurt", calories: 100, grams: 100 },
-            { item: "Banana", calories: 90, grams: 120 },
-            { item: "Almonds", calories: 100, grams: 25 },
-          ]),
-        },
-        lunch: {
-          totalCalories: Math.round(totalCalories * 0.35),
-          items: calculateMealItems(totalCalories * 0.35, [
-            { item: "Grilled Chicken Breast", calories: 220, grams: 200 },
-            { item: "Quinoa", calories: 220, grams: 150 },
-            { item: "Mixed Vegetable Salad", calories: 100, grams: 250 },
-          ]),
-        },
-        dinner: {
-          totalCalories: Math.round(totalCalories * 0.35),
-          items: calculateMealItems(totalCalories * 0.35, [
-            { item: "Salmon", calories: 250, grams: 200 },
-            { item: "Brown Rice", calories: 150, grams: 150 },
-            { item: "Steamed Broccoli", calories: 50, grams: 150 },
-          ]),
-        },
-        snacks: {
-          totalCalories: Math.round(totalCalories * 0.05),
-          items: calculateMealItems(totalCalories * 0.05, [
-            { item: "Apple", calories: 80, grams: 150 },
-            { item: "Peanut Butter", calories: 100, grams: 30 },
-          ]),
-        },
-      },
+    const values = {
+      height,
+      weight,
+      age,
+      gender,
+      dietaryPreferences,
+      foodtype,
+      activityLevel,
+      fitnessGoal,
+      allergies,
+      region,
     };
-
-    setNutritionPlan(plan);
-  };
-
-  const calculateMealItems = (totalMealCalories, items) => {
-    const totalItemCalories = items.reduce(
-      (total, item) => total + item.calories,
-      0
+    const response = await fetch(
+      "http://localhost:4000/nutrition/recommendations",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
     );
-    const factor = totalMealCalories / totalItemCalories;
-    return items.map((item) => ({
-      ...item,
-      calories: Math.round(item.calories * factor),
-      grams: Math.round(item.grams * factor), // Scale grams based on the factor
-    }));
-  };
+    if (!response.ok) {
+      setError(result.error);
+      setEmptyFields(result.emptyFields);
+    }
 
+    const result = await response.json();
+    console.log(values);
+    console.log(result);
+    console.log(nutritionPlan);
+    setNutritionPlan(result);
+
+    setShowResult("block");
+
+    
+    
+    
+  };
   return (
     <>
-      <div className="flex items-center justify-center w-[70%]  h-[500px]">
-        <div className="w-[400px]  p-6 bg-snowWhite rounded-tl-lg rounded-bl-lg shadow-md h-[750px] flex flex-col items-center justify-start ">
-          <h1 className="text-2xl font-bold mb-6 text-center text-gray-800 tracking-wider">
+      <div className="flex items-center justify-center w-[70%] h-full my-4">
+        <div
+          className={`w-[500px] bg-snowWhite shadow-5xl h-[850px] flex flex-col items-center ${
+            showResult == "block" ? "rounded-tl-xl rounded-bl-xl" : "rounded-xl"
+          }`}
+        >
+          <h1 className="text-3xl font-bold text-frenchBlue pt-2">
             Generate Nutrition Plan
           </h1>
-          <form
-            className="bg-transparent h-[700px] w-[300px] flex flex-col justify-evenly"
-            onSubmit={(e) => {
-              e.preventDefault();
-              generateNutritionPlan();
-            }}
-          >
-            <div>
-              <label className="block text-xl font-medium text-gray-700">
-                Height (cm):
-                <input
-                  type="number"
-                  name="height"
-                  value={userInput.height}
-                  onChange={handleChange}
-                  required
-                  className="mt-3 block w-full rounded-md border-gray-300 bg-white p-2 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="block text-xl font-medium text-gray-700">
-                Weight (kg):
-                <input
-                  type="number"
-                  name="weight"
-                  value={userInput.weight}
-                  onChange={handleChange}
-                  required
-                  className="mt-3 block w-full rounded-md bg-white p-2 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="block text-xl font-medium text-gray-700">
-                Age:
-                <input
-                  type="number"
-                  name="age"
-                  value={userInput.age}
-                  onChange={handleChange}
-                  required
-                  className="mt-3 block p-2  w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="block text-xl font-medium text-gray-700">
-                Gender:
-                <select
-                  name="gender"
-                  value={userInput.gender}
-                  onChange={handleChange}
-                  required
-                  className="mt-3 block p-2 w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </label>
-            </div>
-            <div>
-              <label className="block text-xl font-medium text-gray-700">
-                Activity Level:
-                <select
-                  name="activityLevel"
-                  value={userInput.activityLevel}
-                  onChange={handleChange}
-                  required
-                  className="mt-3 block p-2  w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                >
-                  <option value="">Select Activity Level</option>
-                  <option value="sedentary">Sedentary</option>
-                  <option value="light">Light</option>
-                  <option value="moderate">Moderate</option>
-                  <option value="active">Active</option>
-                  <option value="very active">Very Active</option>
-                </select>
-              </label>
-            </div>
-            <div>
-              <label className="block text-xl font-medium text-gray-700">
-                Fitness Goal:
-                <select
-                  name="fitnessGoal"
-                  value={userInput.fitnessGoal}
-                  onChange={handleChange}
-                  required
-                  className="mt-3 block p-2  w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                >
-                  <option value="">Select Goal</option>
-                  <option value="maintain">Maintain Weight</option>
-                  <option value="lose weight">Lose Weight</option>
-                  <option value="gain muscle">Gain Muscle</option>
-                </select>
-              </label>
-            </div>
-            <button
-              type="submit"
-              className="w-full px-4 flex items-center justify-center border border-transparent rounded-md shadow-sm text-2xl font-medium text-white bg-frenchBlue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Generate Plan
-            </button>
-          </form>
+          <div className=" h-full w-full  flex flex-col items-center justify-center ">
+            <mui.FormControl className="flex h-[790px] w-[350px] justify-evenly ">
+              <mui.TextField
+                label="Height (cm)"
+                variant="outlined"
+                type="number"
+                InputProps={{
+                  inputProps: { min: 0 },
+                }}
+                onChange={(e) => setHeight(e.target.value)}
+                value={height}
+                name="height"
+              />
+
+              <mui.TextField
+                label="Weight (kg)"
+                variant="outlined"
+                type="number"
+                InputProps={{
+                  inputProps: { min: 0 },
+                }}
+                onChange={(e) => setWeight(e.target.value)}
+                value={weight}
+                name="weight"
+              />
+
+              <mui.TextField
+                label="Age"
+                variant="outlined"
+                type="number"
+                InputProps={{
+                  inputProps: { min: 0 },
+                }}
+                onChange={(e) => setAge(e.target.value)}
+                value={age}
+                name="age"
+              />
+
+              <mui.TextField
+                select
+                label="Gender"
+                onChange={(e) => setGender(e.target.value)}
+              >
+                {gen.map((option) => (
+                  <mui.MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </mui.MenuItem>
+                ))}
+              </mui.TextField>
+
+              <mui.TextField
+                select
+                label="Dietary Preferences"
+                onChange={(e) => setDietaryPreferences(e.target.value)}
+              >
+                {dietPref.map((option) => (
+                  <mui.MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </mui.MenuItem>
+                ))}
+              </mui.TextField>
+
+              <mui.TextField
+                select
+                label="Food Type"
+                onChange={(e) => setFoodtype(e.target.value)}
+              >
+                {foodTyp.map((option) => (
+                  <mui.MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </mui.MenuItem>
+                ))}
+              </mui.TextField>
+
+              <mui.TextField
+                select
+                label="Activity Level"
+                onChange={(e) => setActivityLevel(e.target.value)}
+              >
+                {actLvl.map((option) => (
+                  <mui.MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </mui.MenuItem>
+                ))}
+              </mui.TextField>
+
+              <mui.TextField
+                select
+                label="Fitness Goal"
+                onChange={(e) => setFitnessGoal(e.target.value)}
+              >
+                {fitGoal.map((option) => (
+                  <mui.MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </mui.MenuItem>
+                ))}
+              </mui.TextField>
+
+              <mui.TextField
+                label="Allergies"
+                variant="outlined"
+                onChange={(e) => setAllergies(e.target.value)}
+                value={allergies}
+                name="allergies"
+              />
+
+              <mui.TextField
+                label="Region"
+                variant="outlined"
+                onChange={(e) => setRegion(e.target.value)}
+                value={region}
+                name="region"
+              />
+
+              <mui.Button
+                variant="contained"
+                onClick={handleSubmit}
+                sx={{ height: 42, fontSize: "18px", fontWeight: "bold" }}
+              >
+                Add Workout
+              </mui.Button>
+            </mui.FormControl>
+          </div>
         </div>
-        <div className="bg-snowWhite w-[500px]  p-6 rounded-tr-lg rounded-br-lg shadow-md h-[750px] flex items-center ">
-          {nutritionPlan && <NutritionPlan plan={nutritionPlan} />}
+
+        <div
+          className={`${
+            showResult == "block"
+              ? "bg-snowWhite w-[500px] rounded-tr-lg rounded-br-lg shadow-5xl h-[850px] flex justify-center"
+              : "hidden"
+          }`}
+        >
+          {nutritionPlan && <NutritionPlan plan={JSON.parse(nutritionPlan)} />}
         </div>
       </div>
     </>

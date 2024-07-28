@@ -4,15 +4,14 @@ const WorkoutPlan = ({ plan }) => {
   return (
     <div className="space-y-3 mt-2 ml-8">
       <h2 className="font-bold text-4xl tracking-wider">Workout Plan</h2>
-      {plan.days.map((day, index) => (
-        <div key={index}>
-          <h3 className="font-black text-frenchBlue text-2xl ">{day.day}</h3>
-          <p className="font-semibold text-black tracking-wider">Exercise: {day.exercise}</p>
-          <p className="font-semibold text-black tracking-wider">Duration: {day.duration}</p>
-        </div>
-      ))}
+      <p className="font-bold text-2xl">
+        Total Daily Calories: {plan.WeeklyWorkoutPlan[0].Day} kcal
+      </p>
+      <p className="font-bold text-2xl">
+        Breakfast: {plan.WeeklyWorkoutPlan[1].Day} kcal
+      </p>
+      <p className="font-bold text-2xl">Snacks: {plan.WeeklyWorkoutPlan[0].WorkoutType} kcal</p>
     </div>
   );
 };
-
 export default WorkoutPlan;

@@ -5,6 +5,7 @@ const {
   createWorkout,
   deleteWorkout,
   updateWorkout,
+  getWorkoutPlan
 } = require("../Controllers/WorkoutController");
 const requireAuth = require('../middleware/requireAuth')
 
@@ -22,5 +23,6 @@ router.post("/", createWorkout);
 router.delete("/:id", deleteWorkout);
 
 router.patch("/:id", updateWorkout);
+
 
 module.exports = router;

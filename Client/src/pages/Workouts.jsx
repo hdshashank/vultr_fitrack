@@ -9,7 +9,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
 import dayjs from "dayjs";
 import error from "../assets/pictures/error.svg";
-import ExerciseForm from './ExerciseForm';
+import ExerciseForm from "./ExerciseForm";
 import ExercisesPage from "./ExercisesPage";
 
 function Workouts() {
@@ -43,44 +43,47 @@ function Workouts() {
         return workoutDate === selectedDate.format("YYYY-MM-DD");
       })
     : [];
-  return ( 
+  return (
     <>
-    <div className="flex items-center justify-center h-[93vh] bg-transparent gap-8">
-      <div className="bg-snowWhite h-[825px] w-[1400px] rounded-xl flex flex-col items-center ">
-        <div className="flex flex-col items-center bg-transparent w-[400px] h-[150px] justify-evenly relative top-6">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DesktopDatePicker
-            label="Date picker"
-            inputFormat="MM/DD/YYYY"
-            value={selectedDate}
-            onChange={handleDateChange}
-            renderInput={(params) => <TextField {...params} />}
-            sx={{ width: "40ch" }}
-          />
-        </LocalizationProvider>
-        <p className="text-frenchBlue font-black tracking-wide text-xl">Workouts logged on {selectedDate.format("MM/DD/YYYY")}</p>
-        </div>
-        <div className="flex gap-6 flex-wrap ml-7 mt-10">
-        {filteredWorkouts.length > 0 ? (
-          filteredWorkouts.map((workout) => (
-            <WorkoutDetails key={workout._id} workout={workout} />
-          ))
-        ) : (
-          <div className="flex flex-col gap-16 top-16 relative">
-          <p className="text-3xl font-black tracking-wider">No workouts found for the selected date.</p>
-          <img src={error} alt="" style={{height:"200px"}}/>
+      <div className="flex items-center justify-center h-[93vh] bg-transparent gap-8">
+        <div className="bg-snowWhite h-[825px] w-[1400px] rounded-xl flex flex-col items-center ">
+          <div className="flex flex-col items-center bg-transparent w-[400px] h-[150px] justify-evenly relative top-6">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                label="Date picker"
+                inputFormat="MM/DD/YYYY"
+                value={selectedDate}
+                onChange={handleDateChange}
+                renderInput={(params) => <TextField {...params} />}
+                sx={{ width: "40ch" }}
+              />
+            </LocalizationProvider>
+            <p className="text-frenchBlue font-black tracking-wide text-xl">
+              Workouts logged on {selectedDate.format("MM/DD/YYYY")}
+            </p>
           </div>
-        )}
+          <div className="flex gap-6 flex-wrap ml-7 mt-10">
+            {filteredWorkouts.length > 0 ? (
+              filteredWorkouts.map((workout) => (
+                <WorkoutDetails key={workout._id} workout={workout} />
+              ))
+            ) : (
+              <div className="flex flex-col gap-16 top-16 relative">
+                <p className="text-3xl font-black tracking-wider">
+                  No workouts found for the selected date.
+                </p>
+                <img src={error} alt="" style={{ height: "200px" }} />
+              </div>
+            )}
+          </div>
         </div>
+        <WorkoutForm />
       </div>
-      <WorkoutForm />
-    </div>
-    <div className="h-[93vh]">
-    <ExerciseForm />
+      <div className="h-full w-full flex items-center justify-center">
+        <ExerciseForm />
+      </div>
 
-    </div>
-
-    <ExercisesPage />
+      <ExercisesPage />
     </>
   );
 }

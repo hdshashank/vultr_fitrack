@@ -3,7 +3,7 @@ import NutritionForm from "./NutritionForm";
 function Nutrition() {
   return (
     <>
-      <div className="h-[93vh] w-full flex items-center justify-center">
+      <div className="h-full w-full flex items-center justify-center">
         <NutritionForm />
       </div>
     </>

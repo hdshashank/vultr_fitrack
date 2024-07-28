@@ -1,0 +1,167 @@
+import { useState } from "react";
+import { useFormik } from "formik";
+import axios from "axios";
+import WorkoutPlan from "./WorkoutPlan";
+
+function ExerciseForm() {
+  const [workoutPlan, setWorkoutPlan] = useState(null);
+
+  const formik = useFormik({
+    initialValues: {
+      age: "",
+      gender: "",
+      weight: "",
+      height: "",
+      fitnessGoal: "",
+      daysAvailable: "",
+      workoutType: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/workouts/recommendations",
+          values
+        );
+        console.log(response.data);
+        const result = response.data;
+        setWorkoutPlan(result);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
+
+  return (
+    <>
+      <div className="flex items-center justify-center w-[70%] relative left-[50%] top-[25%] -translate-x-[50%] h-[500px] ">
+        <div className="w-[400px]  p-6 bg-snowWhite rounded-tl-lg rounded-bl shadow-md h-[750px] flex flex-col items-center justify-center space-x-6">
+          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 tracking-wider">
+            Generate Workout Plan
+          </h2>
+          <form
+            className="bg-transparent h-[400px] w-[300px] flex flex-col justify-evenly"
+            onSubmit={formik.handleSubmit}
+          >
+            <div>
+              <label className="block text-xl font-medium text-gray-700">
+                Height (cm):
+                <input
+                  name="height"
+                  value={formik.values.height}
+                  onChange={formik.handleChange}
+                  placeholder="Height"
+                  required
+                  className="mt-3 block w-full rounded-md bg-white p-2 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </label>
+            </div>
+            <div>
+              <label className="block text-xl font-medium text-gray-700">
+                Weight (kg):
+                <input
+                  name="weight"
+                  value={formik.values.weight}
+                  onChange={formik.handleChange}
+                  placeholder="Weight"
+                  required
+                  className="mt-3 block w-full rounded-md bg-white p-2 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </label>
+            </div>
+            <div>
+              <label className="block text-xl font-medium text-gray-700">
+                Age:
+                <input
+                  name="age"
+                  value={formik.values.age}
+                  onChange={formik.handleChange}
+                  placeholder="Age"
+                  required
+                  className="mt-3 block w-full rounded-md bg-white p-2 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </label>
+            </div>
+            <div>
+              <label className="block text-xl font-medium text-gray-700">
+                Gender:
+                <select
+                  name="gender"
+                  value={formik.values.gender}
+                  onChange={formik.handleChange}
+                  placeholder="Gender"
+                  required
+                  className="mt-3 block p-2 w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label className="block text-xl font-medium text-gray-700">
+                Fitness Goal:
+                <select
+                  name="fitnessGoal"
+                  value={formik.values.fitnessGoal}
+                  onChange={formik.handleChange}
+                  placeholder="Fitness Goal"
+                  required
+                  className="mt-3 block p-2 w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                >
+                  <option value="">Select Fitness Goal</option>
+                  <option value="maintain">Maintain Weight</option>
+                  <option value="lose weight">Lose Weight</option>
+                  <option value="gain muscle">Gain Muscle</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label className="block text-xl font-medium text-gray-700">
+                Workout Type:
+                <select
+                  name="workoutType"
+                  value={formik.values.workoutType}
+                  onChange={formik.handleChange}
+                  placeholder="Workout Type"
+                  required
+                  className="mt-3 block p-2 w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                >
+                  <option value="">Select Workout Type</option>
+                  <option value="Cardio">Cardio</option>
+                  <option value="strength-training">Strength Training</option>
+                  <option value="crossfit">Crossfit</option>
+                  <option value="powerlifting">Powerlifting</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label className="block text-xl font-medium text-gray-700">
+                Days Available:
+                <input
+                  name="daysAvailable"
+                  value={formik.values.daysAvailable}
+                  onChange={formik.handleChange}
+                  placeholder="Days Available"
+                  required
+                  className="mt-3 block w-full rounded-md bg-white p-2 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </label>
+            </div>
+            <button
+              type="submit"
+              className="w-full px-4 mt-6 flex items-center justify-center border border-transparent rounded-md shadow-sm text-2xl font-medium text-white bg-frenchBlue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Generate Plan
+            </button>
+          </form>
+        </div>
+        <div className="bg-snowWhite w-[500px]  p-6 rounded-tr-lg rounded-br-lg shadow-md h-[750px]">
+          {workoutPlan && <WorkoutPlan plan={workoutPlan} />}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default ExerciseForm;
