@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as mui from "@mui/material";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 function WorkoutForm() {
   const { dispatch } = useWorkoutsContext();
@@ -56,7 +56,7 @@ function WorkoutForm() {
   };
 
   return (
-    <div className="h-[425px] w-[400px] bg-snowWhite rounded-2xl">
+    <div className="h-[425px] w-[400px] bg-snowWhite rounded-2xl shadow-5xl">
       <div className="h-[425px] flex items-center justify-center">
         <mui.FormControl sx={{ width: "40ch" }}>
           <mui.TextField

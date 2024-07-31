@@ -2,8 +2,8 @@
 import * as mui from "@mui/material";
 import { useState } from "react";
 // import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 function WorkoutDetails({ workout }) {
   const { dispatch } = useWorkoutsContext();

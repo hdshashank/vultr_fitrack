@@ -18,19 +18,9 @@ function Bmr() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[600px] w-[500px] bg-snowWhite p-8 drop-shadow-md rounded-2xl">
+    <div className="flex flex-col items-center justify-center h-[600px] w-[500px] bg-snowWhite p-8 shadow-5xl rounded-2xl">
       <h2 className="text-3xl font-semibold mb-8">BMR Calculator</h2>
-      <div className="mb-3">
-        <label className="block mb-2 text-xl font-medium text-gray-900">
-          Weight (in kg):
-        </label>
-        <input
-          type="number"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
-      </div>
+      
       <div className="mb-3">
         <label className="block mb-2 text-xl font-medium text-gray-900">
           Height (in cm):
@@ -39,6 +29,17 @@ function Bmr() {
           type="number"
           value={height}
           onChange={(e) => setHeight(e.target.value)}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        />
+      </div>
+      <div className="mb-3">
+        <label className="block mb-2 text-xl font-medium text-gray-900">
+          Weight (in kg):
+        </label>
+        <input
+          type="number"
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
       </div>
@@ -60,7 +61,7 @@ function Bmr() {
         <select
           value={gender}
           onChange={(e) => setGender(e.target.value)}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[275px] p-2.5"
         >
           <option value="male">Male</option>
           <option value="female">Female</option>

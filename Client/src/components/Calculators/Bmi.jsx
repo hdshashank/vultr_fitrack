@@ -13,23 +13,24 @@ const Bmi = () => {
     };
 
     return (
-        <div className='flex flex-col items-center justify-center h-[500px] w-[500px] bg-snowWhite p-8 drop-shadow-md rounded-2xl'>
+        <div className='flex flex-col items-center justify-center h-[500px] w-[500px] bg-snowWhite p-8 shadow-5xl rounded-2xl'>
             <h2 className="text-3xl font-semibold mb-8">BMI Calculator</h2>
-            <div className="mb-3">
-                <label className="block mb-2 text-xl font-medium text-gray-900">Weight (kg):</label>
-                <input 
-                    type="number" 
-                    value={weight} 
-                    onChange={(e) => setWeight(e.target.value)} 
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-            </div>
+            
             <div className="mb-3">
                 <label className="block mb-2 text-xl font-medium text-gray-900">Height (m):</label>
                 <input 
                     type="number" 
                     value={height} 
                     onChange={(e) => setHeight(e.target.value)} 
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                />
+            </div>
+            <div className="mb-3">
+                <label className="block mb-2 text-xl font-medium text-gray-900">Weight (kg):</label>
+                <input 
+                    type="number" 
+                    value={weight} 
+                    onChange={(e) => setWeight(e.target.value)} 
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
             </div>

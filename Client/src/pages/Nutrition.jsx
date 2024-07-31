@@ -1,4 +1,4 @@
-import NutritionForm from "./NutritionForm";
+import NutritionForm from "../components/DietPlan/NutritionForm";
 
 function Nutrition() {
   return (

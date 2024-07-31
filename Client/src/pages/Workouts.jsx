@@ -1,5 +1,5 @@
-import WorkoutForm from "../components/WorkoutForm";
-import WorkoutDetails from "../components/WorkoutDetails";
+import WorkoutForm from "../components/Workouts/WorkoutForm";
+import WorkoutDetails from "../components/Workouts/WorkoutDetails";
 import { useEffect, useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -9,8 +9,8 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
 import dayjs from "dayjs";
 import error from "../assets/pictures/error.svg";
-import ExerciseForm from "./ExerciseForm";
-import ExercisesPage from "./ExercisesPage";
+import ExerciseForm from "../components/WorkoutPlan/ExerciseForm";
+import ExercisesPage from "../components/ExercisesList/ExercisesPage";
 
 function Workouts() {
   const { workouts, dispatch } = useWorkoutsContext();
@@ -46,7 +46,7 @@ function Workouts() {
   return (
     <>
       <div className="flex items-center justify-center h-[93vh] bg-transparent gap-8">
-        <div className="bg-snowWhite h-[825px] w-[1400px] rounded-xl flex flex-col items-center ">
+        <div className="bg-snowWhite h-[825px] w-[1400px] rounded-xl flex flex-col items-center shadow-5xl">
           <div className="flex flex-col items-center bg-transparent w-[400px] h-[150px] justify-evenly relative top-6">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker

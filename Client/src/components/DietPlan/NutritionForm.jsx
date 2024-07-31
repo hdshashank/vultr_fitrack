@@ -3,6 +3,7 @@
 import NutritionPlan from "./NutritionPlan";
 import { useState } from "react";
 import * as mui from "@mui/material";
+import Loader from "../ExercisesList/Loader";
 
 function NutritionForm() {
   const [nutritionPlan, setNutritionPlan] = useState(null);
@@ -19,6 +20,7 @@ function NutritionForm() {
   const [region, setRegion] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const gen = [
     {
@@ -105,6 +107,7 @@ function NutritionForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (
       !height ||
@@ -150,16 +153,10 @@ function NutritionForm() {
     }
 
     const result = await response.json();
-    console.log(values);
     console.log(result);
-    console.log(nutritionPlan);
     setNutritionPlan(result);
-
     setShowResult("block");
-
-    
-    
-    
+    setLoading(false);
   };
   return (
     <>
@@ -290,13 +287,13 @@ function NutritionForm() {
                 variant="contained"
                 onClick={handleSubmit}
                 sx={{ height: 42, fontSize: "18px", fontWeight: "bold" }}
+                disabled={loading}
               >
                 Generate Plan
               </mui.Button>
             </mui.FormControl>
           </div>
         </div>
-
         <div
           className={`${
             showResult == "block"

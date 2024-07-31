@@ -11,13 +11,9 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { WorkoutsContextProvider } from "./context/WorkoutsContext";
 import { useAuthContext } from './hooks/useAuthContext'
-import ExercisesPage from "./pages/ExercisesPage";
-import ExerciseDetail from "./pages/ExerciseDetail";
-
 
 export default function App() {
   const { user } = useAuthContext()
-
   return (
       <WorkoutsContextProvider>
         <div>
@@ -33,8 +29,6 @@ export default function App() {
               <Route path="/community" element={<Community />} />
               <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
               <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" />} />
-              <Route path="/exercises" element={<ExercisesPage />} />
-              <Route path="/exercises/:id" element={<ExerciseDetail />} />
               <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
           </BrowserRouter>

@@ -1,5 +1,5 @@
-import Exercises from "../components/Exercises";
-import SearchExercise from "../components/SearchExercise";
+import Exercises from "./Exercises";
+import SearchExercise from "./SearchExercise";
 import { useState } from "react";
 
 function ExercisesPage() {

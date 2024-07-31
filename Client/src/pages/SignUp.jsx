@@ -18,7 +18,8 @@ function SignUp() {
   return (
     <>
       <Slider />
-      <div className="h-[450px] w-[1000px] bg-white left-[50%] top-[50%] -translate-x-2/4 -translate-y-2/4 absolute flex items-center justify-center gap-10 rounded-lg  backdrop-blur-md">
+      <div className="h-[450px] w-[1000px] bg-white left-[50%] top-[50%] -translate-x-2/4 -translate-y-2/4
+       absolute flex items-center justify-center gap-10 rounded-lg  backdrop-blur-md">
         <div className="h-[450px] w-[400px]">
           <img
             src={logo}

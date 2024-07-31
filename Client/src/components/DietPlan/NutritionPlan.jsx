@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 
 const NutritionPlan = ({ plan }) => {
-  console.log(plan);
   return (
     <div className=" flex flex-col items-center">
       <h2 className="tracking-wider text-3xl font-bold text-frenchBlue p-2">
@@ -17,7 +16,7 @@ const NutritionPlan = ({ plan }) => {
           </span>
         </p>
 
-        <p className="font-bold text-xl ">
+        <div className="font-bold text-xl ">
           <span className="">Breakfast</span>
           <br />
           <ul className="flex text-lg gap-4 mt-1 text-frenchBlue ">
@@ -50,9 +49,9 @@ const NutritionPlan = ({ plan }) => {
               </li>
             ))}
           </ul>
-        </p>
+        </div>
 
-        <p className="font-bold text-xl ">
+        <div className="font-bold text-xl ">
           <span className="">Lunch</span>
           <br />
           <ul className="flex text-lg gap-4 mt-1 text-frenchBlue ">
@@ -87,8 +86,8 @@ const NutritionPlan = ({ plan }) => {
               </li>
             ))}
           </ul>
-        </p>
-        <p className="font-bold text-xl ">
+        </div>
+        <div className="font-bold text-xl ">
           <span className="">Dinner</span>
           <br />
           <ul className="flex text-lg gap-4 mt-1 text-frenchBlue ">
@@ -123,8 +122,8 @@ const NutritionPlan = ({ plan }) => {
               </li>
             ))}
           </ul>
-        </p>
-        <p className="font-bold text-xl ">
+        </div>
+        <div className="font-bold text-xl ">
           <span className="">Snacks</span>
           <br />
           <ul className="flex text-lg gap-4 mt-1 text-frenchBlue ">
@@ -157,7 +156,7 @@ const NutritionPlan = ({ plan }) => {
               </li>
             ))}
           </ul>
-        </p>
+        </div>
       </div>
     </div>
   );
