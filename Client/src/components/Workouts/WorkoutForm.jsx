@@ -14,9 +14,11 @@ function WorkoutForm() {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!user) {
       setError("You must be logged in");
@@ -52,6 +54,7 @@ function WorkoutForm() {
       setError(null);
       dispatch({ type: "CREATE_WORKOUT", payload: json });
       setSnackbarOpen(true);
+      setLoading(false);
     }
   };
 
@@ -100,6 +103,7 @@ function WorkoutForm() {
             variant="contained"
             sx={{ margin: 2.5, height: 42, fontSize: "18px" }}
             onClick={handleSubmit}
+            disabled={loading}
           >
             Add Workout
           </mui.Button>

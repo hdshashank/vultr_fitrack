@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import Loader2 from "../Loaders/Loader2";
 
 import { useState } from "react";
 import * as mui from "@mui/material";
@@ -13,9 +14,10 @@ function ExerciseForm() {
   const [gender, setGender] = useState("");
   const [fitnessGoal, setFitnessGoal] = useState("");
   const [workoutType, setWorkoutType] = useState("");
-  const [daysAvail, setDaysAvail] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   const gen = [
     {
@@ -68,16 +70,10 @@ function ExerciseForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    if (
-      !height ||
-      !weight ||
-      !age ||
-      !gender ||
-      !workoutType ||
-      !fitnessGoal ||
-      !daysAvail 
-    ) {
+
+    if (!height || !weight || !age || !gender || !workoutType || !fitnessGoal) {
       setError("Please fill in all fields");
       return;
     }
@@ -89,7 +85,6 @@ function ExerciseForm() {
       gender,
       workoutType,
       fitnessGoal,
-      daysAvail,
     };
     const response = await fetch(
       "http://localhost:4000/workout/recommendations",
@@ -111,12 +106,8 @@ function ExerciseForm() {
     console.log(result);
     console.log(workoutPlan);
     setWorkoutPlan(result);
-
     setShowResult("block");
-
-    
-    
-    
+    setLoading(false);
   };
   return (
     <>
@@ -203,39 +194,36 @@ function ExerciseForm() {
                 ))}
               </mui.TextField>
 
-              
-
-             
-              <mui.TextField
-                label="Days Available"
-                variant="outlined"
-                onChange={(e) => setDaysAvail(e.target.value)}
-                value={daysAvail}
-                name="allergies"
-              />
-
-              
-
               <mui.Button
                 variant="contained"
                 onClick={handleSubmit}
                 sx={{ height: 42, fontSize: "18px", fontWeight: "bold" }}
+                disabled={loading}
               >
                 Generate Plan
               </mui.Button>
             </mui.FormControl>
           </div>
         </div>
-
+        <div
+          className={`${
+            loading ? "block h-[94vh] absolute z-50 w-screen bg-black bg-opacity-20 " : "hidden"
+          }`}
+        >
+          <div className="flex items-center justify-center h-full">
+          <Loader2 />
+          </div>
+        </div>
         <div
           className={`${
             showResult == "block"
-              ? "bg-snowWhite w-[1200px] rounded-tr-lg rounded-br-lg shadow-5xl h-[800px] flex justify-center"
+              ? "bg-snowWhite w-[800px] rounded-tr-lg rounded-br-lg shadow-5xl h-[800px] flex justify-center items-center"
               : "hidden"
           }`}
         >
           {workoutPlan && <WorkoutPlan plan={JSON.parse(workoutPlan)} />}
         </div>
+        
       </div>
     </>
   );

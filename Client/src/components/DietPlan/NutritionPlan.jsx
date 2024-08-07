@@ -2,12 +2,12 @@
 
 const NutritionPlan = ({ plan }) => {
   return (
-    <div className=" flex flex-col items-center">
+    <div className=" flex flex-col items-center ">
       <h2 className="tracking-wider text-3xl font-bold text-frenchBlue p-2">
         {" "}
         Nutrition Plan
       </h2>
-      <div className=" flex flex-col h-[790px] w-[450px] space-y-3 items-start  gap-x-6">
+      <div className=" flex flex-col h-[790px] w-[450px] items-start justify-evenly gap-x-6">
         <p className="font-bold text-xl text-black leading-7 ">
           <span className="text-black">Total Daily Calories</span>
           <br />

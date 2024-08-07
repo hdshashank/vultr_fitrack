@@ -3,6 +3,8 @@
 import NutritionPlan from "./NutritionPlan";
 import { useState } from "react";
 import * as mui from "@mui/material";
+import Loader2 from "../Loaders/Loader2";
+import Loader1 from "../Loaders/Loader1";
 import Loader from "../ExercisesList/Loader";
 
 function NutritionForm() {
@@ -292,6 +294,15 @@ function NutritionForm() {
                 Generate Plan
               </mui.Button>
             </mui.FormControl>
+          </div>
+        </div>
+        <div
+          className={`${
+            loading ? "block h-[94vh] absolute z-50 w-screen bg-black bg-opacity-20 " : "hidden"
+          }`}
+        >
+          <div className="flex items-center justify-center h-full">
+          <Loader2 />
           </div>
         </div>
         <div

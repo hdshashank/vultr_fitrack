@@ -6,32 +6,57 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const getWorkoutPlan = async (req, res) => {
   const inputData = req.body;
-  const prompt = `Think you are a fitness coach, given a person's age, gender, height, weight, fitness goals (e.g., weight loss, muscle gain, endurance, maintain weight), preferred workout types (e.g., cardio, strength training, flexibility, crossfit), days available for workouts. Please provide absolute results without mentioning the method. Please provide the results in plain JSON format without any additional text formatting or explanations.
-  
+  const prompt = `Think you are a fitness coach, given a person's age, gender, height, weight, fitness goals (e.g., weight loss, muscle gain, endurance, maintain weight), preferred workout types (e.g., cardio, strength training, flexibility, crossfit).Provide a 5 day workout split plan containing 4 exercises for each day based on the input parameters. Please provide absolute results without mentioning the method. Please provide the results in plain JSON format without any additional text formatting or explanations.
+  Go through the following to understand the expected output format:
   {
-    "WeeklyWorkoutPlan": [
-      {
-        "Day": "Day of the week",
-        "WorkoutType": "type",
-        "Exercises": [
+    "Day1" : {
+      "Exercise1": 
           {
-            "Exercise": "name",
-            "Sets": "number",
-            "Reps": "number",
-            "RestPeriod": "time"
-          }
-        ],
-        "Duration": "total time in minutes",
-        "CaloriesBurned": "estimated calories"
-      }
-    ]
+            "ExerciseName": "",
+            "Sets": "",
+            "Reps": "",
+            "Rest": ""
+          },
+      "Exercise2": 
+          {
+            "ExerciseName": "",
+            "Sets": "",
+            "Reps": "",
+            "Rest": ""
+          },
+      and so on for Exercise3, Exercise4.
+    },
+    "Day2" : {
+      "Exercise1": 
+          {
+            "ExerciseName": "",
+            "Sets": "",
+            "Reps": "",
+            "Rest": ""
+          },
+      "Exercise2": 
+          {
+            "ExerciseName": "",
+            "Sets": "",
+            "Reps": "",
+            "Rest": ""
+          },
+      and so on for Exercise3, Exercise4.
+    },
+    and so on for Day3, Day4, Day5.
   }
+    If it is a rest day then return in the following format.
+    {
+      "Day": "Rest"
+    }
+    
+    
+
   Person age: ${inputData.age}
   Person gender: ${inputData.gender}
   Person weight: ${inputData.weight}
   Person height: ${inputData.height}
   Person fitnessGoal: ${inputData.fitnessGoal}
-  Person daysAvailable: ${inputData.daysAvailable}
   Person workoutType: ${inputData.workoutType}.`;
 
   try {
