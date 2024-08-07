@@ -22,7 +22,7 @@ function Workouts() {
   };
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch("http://localhost:4000/workouts", {
+      const response = await fetch("https://fitrack-ewi2.onrender.com/workouts", {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       const json = await response.json();
