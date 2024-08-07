@@ -87,7 +87,7 @@ function ExerciseForm() {
       fitnessGoal,
     };
     const response = await fetch(
-      "http://localhost:4000/workout/recommendations",
+      "https://fitrack-ewi2.onrender.com/workout/recommendations",
       {
         method: "POST",
         headers: {

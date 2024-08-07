@@ -13,7 +13,7 @@ function WorkoutDetails({ workout }) {
   const handleSubmit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/workouts/${workout._id}`,
+        `https://fitrack-ewi2.onrender.com/workouts/${workout._id}`,
         {
           method: "DELETE",
           headers: {
