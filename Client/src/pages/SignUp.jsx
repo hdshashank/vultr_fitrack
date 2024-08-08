@@ -13,13 +13,15 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(name, email, password);
-  }
+  };
 
   return (
     <>
       <Slider />
-      <div className="h-[450px] w-[1000px] bg-white left-[50%] top-[50%] -translate-x-2/4 -translate-y-2/4
-       absolute flex items-center justify-center gap-10 rounded-lg  backdrop-blur-md">
+      <div
+        className="h-[450px] w-[1000px] bg-white left-[50%] top-[50%] -translate-x-2/4 -translate-y-2/4
+       absolute flex items-center justify-center gap-10 rounded-lg  backdrop-blur-md"
+      >
         <div className="h-[450px] w-[400px]">
           <img
             src={logo}
@@ -63,7 +65,7 @@ function SignUp() {
               disabled={loading}
             >
               Signup
-            </mui.Button> 
+            </mui.Button>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <div className="flex gap-2 relative left-[20%] ">
               <h4>Already have an account?</h4>
