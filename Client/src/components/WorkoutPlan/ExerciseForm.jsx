@@ -85,7 +85,7 @@ function ExerciseForm() {
       fitnessGoal,
     };
     const response = await fetch(
-      "https://vultr-fitrack.onrender.com/workout/recommendations",
+      "http://localhost:4000/workout/recommendations",
       {
         method: "POST",
         headers: {

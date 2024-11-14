@@ -12,7 +12,7 @@ function WorkoutDetails({ workout }) {
   const handleSubmit = async () => {
     try {
       const response = await fetch(
-        `https://vultr-fitrack.onrender.com/workouts/${workout._id}`,
+        `http://localhost:4000/workouts/${workout._id}`,
         {
           method: "DELETE",
           headers: {
